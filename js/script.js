@@ -25,17 +25,17 @@ const fetchPopularMovies = async (page)=>{
   const data = await (await fetch(`${DOMAIN_URL}${KEY}${PAGE_NO}${page? page : 1}`)).json();
     let recivedData = data['results'];
    
-    var myHTML = "";
-    let imgUrl = "https://fwemoviedb.herokuapp.com/img/w500";
-    var dots = "...";
-    var titleList = "";
+    var myHTML = "";    
+    let imgUrl = "https://fwemoviedb.herokuapp.com/img/w500";   
+    var dots = "...";   
+    var titleList = ""; 
 
-   
+
     for (var i=0; i<recivedData.length; i++){
         const {poster_path, title, overview, id} = recivedData[i];
-     
+
         titleList += title + "," ;
-        
+
 
         myHTML += `  <div class="col-md-3">
                         <div class="card mb" onclick="redirect(${id})">
@@ -47,24 +47,22 @@ const fetchPopularMovies = async (page)=>{
                             </div>
                         </div>
                     </div>`
-                   
-    }
+    }   
 
      const titleArray = titleList.split(",");
 
    
-   
-    var a = titleArray;
-    // console.log(a);
-    // console.log(typeof(a));
-    document.getElementById("movieName").autocomplete({
-        lookup: a
-    });
+ 
+    
     document.getElementById("allMovie").innerHTML = myHTML;
 }
 
 
 
+
+document.getElementById("movieName").autocomplete({
+    lookup: titleArray
+});
 
 
 const redirect = (id) => {

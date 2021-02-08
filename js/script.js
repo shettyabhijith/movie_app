@@ -28,24 +28,44 @@ const fetchPopularMovies = async (page)=>{
     var myHTML = "";
     let imgUrl = "https://fwemoviedb.herokuapp.com/img/w500";
     var dots = "...";
+    var titleList = "";
+
+   
     for (var i=0; i<recivedData.length; i++){
         const {poster_path, title, overview, id} = recivedData[i];
+     
+        titleList += title + "," ;
+        
 
         myHTML += `  <div class="col-md-3">
                         <div class="card mb" onclick="redirect(${id})">
-                        <img class="card-img-top" src="${imgUrl}${poster_path}" alt="Card image cap">
-                        <div class="card-body mb">
-                            <h5 class="card-title">${title}</h5>
-                            <p class="card-text">${overview.slice(0, 50)+dots}</p>
-                            <button type="button" class="btn btn-danger mb">Read More</button>
-                        </div>
+                            <img class="card-img-top" src="${imgUrl}${poster_path}" alt="Card image cap">
+                            <div class="card-body mb">
+                                <h5 class="card-title">${title}</h5>
+                                <p class="card-text">${overview.slice(0, 50)+dots}</p>
+                                <button type="button" class="btn btn-danger mb">Read More</button>
+                            </div>
                         </div>
                     </div>`
                    
     }
-    console.log(myHTML);    
+
+     const titleArray = titleList.split(",");
+
+   
+   
+    var a = titleArray;
+    // console.log(a);
+    // console.log(typeof(a));
+    document.getElementById("movieName").autocomplete({
+        lookup: a
+    });
     document.getElementById("allMovie").innerHTML = myHTML;
 }
+
+
+
+
 
 const redirect = (id) => {
     window.location =`preview.html?id=${id}`;
